@@ -4,7 +4,7 @@ import detectEthereumProvider from "@metamask/detect-provider";
 import Web3 from "web3";
 import { setupHooks } from "./hooks/setupHooks";
 
-const Web3Context = createContext(null)
+const Web3Context = createContext(null);
 
 export default function Web3Provider({ children }) {
   const [web3Api, setWeb3Api] = useState({
@@ -12,7 +12,7 @@ export default function Web3Provider({ children }) {
     web3: null,
     contract: null,
     isLoading: true
-  })
+  });
 
   useEffect(() => {
     const loadProvider = async () => {
