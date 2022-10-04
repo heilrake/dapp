@@ -7,7 +7,7 @@ export default function Card({ course }) {
       className="bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
       <div className="flex h-full">
         <div className="flex h-full">
-          <Image
+          <img
             className="object-cover"
             src={course.coverImage}
             layout="fixed"
