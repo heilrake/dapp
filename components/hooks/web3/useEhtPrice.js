@@ -16,7 +16,7 @@ export const useEthPrice = () => {
     { refreshInterval: 10000 }
   );
 
-  const perItem = (data && (COURSE_PRICE / Number(data)).toFixed(6)) ?? null // pice 15$ eth
+  const perItem = (data && (COURSE_PRICE / Number(data)).toFixed(6)) ?? null // piece 15$ eth
 
   return { eth: { data, perItem, ...rest } };
 };
