@@ -6,7 +6,7 @@ import { useAccount } from "@components/hooks/web3";
 import { useRouter } from 'next/router';
 
 export default function Footer() {
-  const { connect, isLoading, isWeb3Loaded } = useWeb3();
+  const { connect, isLoading, requireInstall } = useWeb3();
   const { account } = useAccount();
   const { pathname } = useRouter();
 
@@ -48,27 +48,27 @@ export default function Footer() {
                   onClick={connect}>
                   Loading...
                 </Button> :
-                isWeb3Loaded ?
-                  account.data ?
+                account.data ?
+                  <Button
+                    hoverable={false}
+                    className="cursor-default">
+                    Hi there {account.isAdmin && "Admin"}
+                  </Button> :
+                  requireInstall ?
                     <Button
-                      hoverable={false}
-                      className="cursor-default">
-                      Hi there {account.isAdmin && "Admin"}
+                      onClick={() => window.open("https://metamask.io/download.html", "_blank")}>
+                      Install Metamask
                     </Button> :
                     <Button
                       onClick={connect}>
                       Connect
-                    </Button> :
-                  <Button
-                    onClick={() => window.open("https://metamask.io/download.html", "_blank")}>
-                    Install Metamask
-                  </Button>
+                    </Button>
               }
             </div>
           </div>
         </nav>
-      </div >
-      {account &&
+      </div>
+      {account.data &&
         !pathname.includes("/marketplace") &&
         <div className="flex justify-end pt-1 sm:px-6 lg:px-8">
           <div className="text-white bg-indigo-600 rounded-md p-2">
@@ -76,6 +76,6 @@ export default function Footer() {
           </div>
         </div>
       }
-    </section >
+    </section>
   )
 }
