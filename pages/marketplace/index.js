@@ -1,36 +1,19 @@
 import { CourseList, CourseCard } from "@components/ui/course";
 import { BaseLayout } from "@components/ui/layout";
 import { getAllCourses } from "@content/courses/fetcher";
-import { WalletBar, EthRates } from "@components/ui/web3";
 import { useWalletInfo } from "@components/hooks/web3";
-import { Breadcrumbs, Button } from "@components/ui/common";
+import { Button } from "@components/ui/common";
 import { OrderModal } from "@components/ui/order";
 import { useState } from "react";
-import { useEthPrice } from "@components/hooks/web3/useEhtPrice";
+import { MarketHeader } from "@components/ui/marketplace";
 export default function Marketplace({ courses }) {
-  const { eth } = useEthPrice();
-  const { account, network, canPurchaseCourse } = useWalletInfo();
-
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const { canPurchaseCourse } = useWalletInfo();
+
   return (
     <>
-      <div className="pt-4">
-        <WalletBar
-          address={account.data}
-          network={{
-            data: network.data,
-            target: network.target,
-            isSupported: network.isSupported,
-            hasInitialResponse: network.hasInitialResponse
-          }}
-        />
-        <EthRates
-          eth={eth.data}
-          ethPerItem={eth.perItem}
-        />
-        <div className="flex flex-row-reverse py-4 px-4 sm:px-6 lg:px-8">
-          <Breadcrumbs />
-        </div>
+      <div className="py-4">
+        <MarketHeader />
       </div>
       <CourseList
         courses={courses}
@@ -38,11 +21,14 @@ export default function Marketplace({ courses }) {
         {course =>
           <CourseCard
             key={course.id}
-            disabled={!canPurchaseCourse}
             course={course}
+            disabled={!canPurchaseCourse}
             Footer={() =>
               <div className="mt-4">
-                <Button variant="lightPurple" disabled={!canPurchaseCourse} onClick={() => setSelectedCourse(course)}>
+                <Button
+                  onClick={() => setSelectedCourse(course)}
+                  disabled={!canPurchaseCourse}
+                  variant="lightPurple">
                   Purchase
                 </Button>
               </div>
@@ -58,7 +44,7 @@ export default function Marketplace({ courses }) {
       }
     </>
   )
-};
+}
 
 export function getStaticProps() {
   const { data } = getAllCourses();
@@ -67,6 +53,6 @@ export function getStaticProps() {
       courses: data
     }
   }
-};
+}
 
 Marketplace.Layout = BaseLayout;
