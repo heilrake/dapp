@@ -1,14 +1,15 @@
-import { CourseList, CourseCard } from "@components/ui/course";
-import { BaseLayout } from "@components/ui/layout";
-import { getAllCourses } from "@content/courses/fetcher";
-import { useWalletInfo } from "@components/hooks/web3";
-import { Button } from "@components/ui/common";
-import { OrderModal } from "@components/ui/order";
-import { useState } from "react";
-import { MarketHeader } from "@components/ui/marketplace";
+import { CourseCard, CourseList } from "@components/ui/course"
+import { BaseLayout } from "@components/ui/layout"
+import { getAllCourses } from "@content/courses/fetcher"
+import { useWalletInfo } from "@components/hooks/web3"
+import { Button } from "@components/ui/common"
+import { OrderModal } from "@components/ui/order"
+import { useState } from "react"
+import { MarketHeader } from "@components/ui/marketplace"
+
 export default function Marketplace({ courses }) {
-  const [selectedCourse, setSelectedCourse] = useState(null);
-  const { canPurchaseCourse } = useWalletInfo();
+  const [selectedCourse, setSelectedCourse] = useState(null)
+  const { canPurchaseCourse } = useWalletInfo()
 
   return (
     <>
@@ -47,7 +48,7 @@ export default function Marketplace({ courses }) {
 }
 
 export function getStaticProps() {
-  const { data } = getAllCourses();
+  const { data } = getAllCourses()
   return {
     props: {
       courses: data
@@ -55,4 +56,4 @@ export function getStaticProps() {
   }
 }
 
-Marketplace.Layout = BaseLayout;
+Marketplace.Layout = BaseLayout; 

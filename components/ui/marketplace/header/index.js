@@ -4,12 +4,12 @@ import { EthRates, WalletBar } from "@components/ui/web3";
 
 export default function Header() {
   return (
-    <>
+    <div>
       <WalletBar />
       <EthRates />
       <div className="flex flex-row-reverse pb-4 px-4 sm:px-6 lg:px-8">
         <Breadcrumbs />
       </div>
-    </>
+    </div>
   )
 };
