@@ -25,7 +25,6 @@ export const useAccount = () => {
 export const useWalletInfo = () => {
   const { account } = useAccount();
   const { network } = useNetwork();
-  console.log(account);
 
   return {
     account,
