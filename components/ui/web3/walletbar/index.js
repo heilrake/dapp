@@ -4,7 +4,6 @@ import { useWeb3 } from "@components/providers";
 export default function WalletBar() {
   const { requireInstall } = useWeb3();
   const { account, network } = useWalletInfo();
-  console.log(account);
 
   return (
     <section className="text-white bg-indigo-600  rounded-lg">
