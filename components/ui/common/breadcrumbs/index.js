@@ -1,7 +1,6 @@
 import { ActiveLink } from "@components/ui/common"
 
 export default function Breadcrumbs({ items }) {
-  console.log(items);
   return (
     <nav aria-label="breadcrumb" >
       <ol className="flex leading-none text-indigo-600 divide-x divide-indigo-400">
