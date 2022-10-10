@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 export default function OrderModal({ course, onClose }) {
   const [isOpen, setIsOpen] = useState(false);
+  const [enablePrice, setEnablePrice] = useState(false);
   const [order, setOrder] = useState({
     price: "",
     email: "",
@@ -42,6 +43,14 @@ export default function OrderModal({ course, onClose }) {
                   <div className="text-xs text-gray-700 flex">
                     <label className="flex items-center mr-2">
                       <input
+                        checked={enablePrice}
+                        onChange={({ target: { checked } }) => {
+                          setOrder({
+                            ...order,
+                            price: checked ? order.price : eth.perItem
+                          })
+                          setEnablePrice(checked);
+                        }}
                         type="checkbox"
                         className="form-checkbox"
                       />
@@ -50,6 +59,7 @@ export default function OrderModal({ course, onClose }) {
                   </div>
                 </div>
                 <input
+                  disabled={!enablePrice}
                   value={order.price}
                   onChange={({ target: { value } }) => {
                     if (isNaN(value)) { return; }
