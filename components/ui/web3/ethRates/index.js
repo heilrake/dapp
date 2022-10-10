@@ -24,7 +24,7 @@ export default function EthRates() {
                 </span>
               </> :
               <div className="w-full flex justify-center">
-                <Loader size="md" />
+                <Loader />
               </div>
             }
           </div>
@@ -50,7 +50,7 @@ export default function EthRates() {
                 </span>
               </> :
               <div className="w-full flex justify-center">
-                <Loader size="md" />
+                <Loader />
               </div>
             }
           </div>
