@@ -1,6 +1,7 @@
-const { createContext, useContext, useEffect, useState, useMemo } = require("react");
+import { createContext, useContext, useEffect, useState, useMemo } from "react";
 
 import detectEthereumProvider from "@metamask/detect-provider";
+import { loadContract } from "untils/loadContract";
 import Web3 from "web3";
 import { setupHooks } from "./hooks/setupHooks";
 
@@ -20,14 +21,16 @@ export default function Web3Provider({ children }) {
 
       const provider = await detectEthereumProvider()
       if (provider) {
-        const web3 = new Web3(provider)
+        const web3 = new Web3(provider);
+        const contract = await loadContract("CourseMarketplace", web3);
+
         setWeb3Api({
           provider,
           web3,
-          contract: null,
+          contract,
           isLoading: false,
           hooks: setupHooks(web3, provider)
-        })
+        });
       } else {
         setWeb3Api(api => ({ ...api, isLoading: false }))
         console.error("Please, install Metamask.")
@@ -35,7 +38,7 @@ export default function Web3Provider({ children }) {
     }
 
     loadProvider()
-  }, [])
+  }, []);
 
   const _web3Api = useMemo(() => {
     const { web3, provider, isLoading } = web3Api
@@ -52,7 +55,7 @@ export default function Web3Provider({ children }) {
         } :
         () => console.error("Cannot connect to Metamask, try to reload your browser please.")
     }
-  }, [web3Api])
+  }, [web3Api]);
 
   return (
     <Web3Context.Provider value={_web3Api}>
@@ -62,10 +65,10 @@ export default function Web3Provider({ children }) {
 };
 
 export function useWeb3() {
-  return useContext(Web3Context)
+  return useContext(Web3Context);
 };
 
 export function useHooks(cb) {
-  const { hooks } = useWeb3()
-  return cb(hooks)
+  const { hooks } = useWeb3();
+  return cb(hooks);
 };
