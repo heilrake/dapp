@@ -16,13 +16,12 @@ export default function Marketplace({ courses }) {
   // haxing data by orderForm 
   const purchaseCourse = async order => {
     const hexCourseId = web3.utils.utf8ToHex(selectedCourse.id);
-    console.log(hexCourseId);
 
     const orderHash = web3.utils.soliditySha3(
       { type: "bytes16", value: hexCourseId },
       { type: "address", value: account.data }
     );
-    console.log(orderHash);
+
     const emailHash = web3.utils.sha3(order.email);
 
     const proof = web3.utils.soliditySha3(
