@@ -7,14 +7,23 @@ import { setupHooks } from "./hooks/setupHooks";
 
 const Web3Context = createContext(null);
 
+const createWeb3State = ({ web3, provider, contact, isLoading }) => {
+  return {
+    web3,
+    provider,
+    contract,
+    isLoading,
+    hooks: setupHooks({ web3, provider, contract })
+  }
+};
+
 export default function Web3Provider({ children }) {
-  const [web3Api, setWeb3Api] = useState({
+  const [web3Api, setWeb3Api] = useState(createWeb3State({
     provider: null,
     web3: null,
     contract: null,
     isLoading: true,
-    hooks: setupHooks({ provider: null, web3: null, contract: null })
-  });
+  }));
 
   useEffect(() => {
     const loadProvider = async () => {
@@ -29,7 +38,6 @@ export default function Web3Provider({ children }) {
           web3,
           contract,
           isLoading: false,
-          hooks: setupHooks({ web3, provider, contract })
         });
       } else {
         setWeb3Api(api => ({ ...api, isLoading: false }))
