@@ -23,10 +23,10 @@ export const useAccount = () => {
 };
 
 export const useOwnedCourses = (...args) => {
-  const swRes = useHooks(hooks => hooks.useOwnedCourses)(...args);
+  const swRes = enhanceHook(useHooks(hooks => hooks.useOwnedCourses)(...args));
 
   return {
-    ownedCourses: swrRes
+    ownedCourses: swRes
   }
 };
 
