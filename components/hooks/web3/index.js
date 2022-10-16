@@ -1,4 +1,3 @@
-
 import { useHooks } from "@components/providers/web3";
 
 const enhanceHook = swrRes => {
@@ -9,26 +8,25 @@ const enhanceHook = swrRes => {
 };
 
 export const useNetwork = () => {
-  const swrRes = enhanceHook(useHooks(hooks => hooks.useNetwork)())
+  const swrRes = enhanceHook(useHooks(hooks => hooks.useNetwork)());
   return {
     network: swrRes
   }
 };
 
 export const useAccount = () => {
-  const swrRes = enhanceHook(useHooks(hooks => hooks.useAccount)())
+  const swrRes = enhanceHook(useHooks(hooks => hooks.useAccount)());
   return {
     account: swrRes
   }
 };
 
 export const useOwnedCourses = (...args) => {
-  const swRes = enhanceHook(useHooks(hooks => hooks.useOwnedCourses)(...args));
-
+  const swrRes = enhanceHook(useHooks(hooks => hooks.useOwnedCourses)(...args));
   return {
-    ownedCourses: swRes
+    ownedCourses: swrRes
   }
-};
+}
 
 export const useWalletInfo = () => {
   const { account } = useAccount();
