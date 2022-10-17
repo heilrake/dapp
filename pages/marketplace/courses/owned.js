@@ -4,9 +4,11 @@ import { BaseLayout } from "@components/ui/layout";
 import { MarketHeader } from "@components/ui/marketplace";
 import { useAccount, useOwnedCourses } from "@components/hooks/web3";
 import { getAllCourses } from "@content/courses/fetcher";
+import { useRouter } from "next/router";
 export default function OwnedCourses({ courses }) {
-  const { account } = useAccount()
-  const { ownedCourses } = useOwnedCourses(courses, account.data)
+  const router = useRouter();
+  const { account } = useAccount();
+  const { ownedCourses } = useOwnedCourses(courses, account.data);
 
   return (
     <>
@@ -20,7 +22,7 @@ export default function OwnedCourses({ courses }) {
             {/* <Message>
               My custom message!
             </Message> */}
-            <Button>
+            <Button onClick={() => router.push(`/courses/${course.slug}`)}>
               Watch the course
             </Button>
           </OwnedCourseCard>
