@@ -26,7 +26,15 @@ export const useOwnedCourses = (...args) => {
   return {
     ownedCourses: swrRes
   }
-}
+};
+
+export const useOwnedCourse = (...args) => {
+  const swrRes = enhanceHook(useHooks(hooks => hooks.useOwnedCourse)(...args))
+
+  return {
+    ownedCourse: swrRes
+  }
+};
 
 export const useWalletInfo = () => {
   const { account } = useAccount();
