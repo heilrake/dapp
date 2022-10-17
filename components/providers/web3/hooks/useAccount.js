@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import useSWR from "swr";
 
 const adminAddresses = {
-  "0x55580C85ACAf0dc4efC400468b8aF4e5b16C72f0": true // kecak256
+  "0xA5BF836C0895CEB07E3f5d3f78cfadf2dacDBbfd": true // kecak256
 };
 
 export const handler = (web3, provider) => () => {
@@ -24,7 +24,7 @@ export const handler = (web3, provider) => () => {
     data,
     isAdmin: (
       data &&
-      adminAddresses[data]) ?? false, // web3.utils.keccak256(data) it is commit
+      adminAddresses[web3.utils.keccak256(data)]) ?? false,
     mutate,
     ...rest
   }
