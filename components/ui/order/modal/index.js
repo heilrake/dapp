@@ -2,8 +2,8 @@ import { useEthPrice } from '@components/hooks/web3/useEhtPrice';
 import { Modal, Button } from '@components/ui/common';
 import { useEffect, useState } from 'react';
 
-export default function OrderModal({ course, onClose, onSubmit }) {
-  const [isOpen, setIsOpen] = useState(false);
+export default function OrderModal({ course, onClose, onSubmit, isOpenModal }) {
+  const [isOpen, setIsOpen] = useState(isOpenModal);
   const [enablePrice, setEnablePrice] = useState(false);
   const [hasAgreedTOS, setHasAgreedTOS] = useState(false);
   const [order, setOrder] = useState({
@@ -16,15 +16,15 @@ export default function OrderModal({ course, onClose, onSubmit }) {
 
   const createFormState = ({ price, email, confirmationEmail }, hasAgreedTOS) => {
     if (!price || Number(price) <= 0) {
-      return _createFormState(true, "Price is not valid.")
+      return _createFormState(true, "Price is not valid.");
     }
     else if (confirmationEmail.length === 0 || email.length === 0) {
-      return _createFormState(true)
+      return _createFormState(true);
     }
     else if (email !== confirmationEmail) {
       return _createFormState(true, "Email are not matching.")
     } else if (!hasAgreedTOS) {
-      return _createFormState(true, "You need to agree with terms of service in order to submit the form")
+      return _createFormState(true, "You need to agree with terms of service in order to submit the form");
     }
     return _createFormState()
   };
@@ -42,6 +42,15 @@ export default function OrderModal({ course, onClose, onSubmit }) {
   }, [course]);
 
   const closeModal = () => {
+    setIsOpen(false);
+    setOrder();
+    setEnablePrice(false);
+    setHasAgreedTOS(false);
+    onClose();
+  };
+
+  const onSubmitModal = (order) => {
+    onSubmit(order)
     setIsOpen(false);
     setOrder();
     setEnablePrice(false);
@@ -159,7 +168,7 @@ export default function OrderModal({ course, onClose, onSubmit }) {
           <Button
             disabled={formState.isDisabled}
             onClick={() => {
-              onSubmit(order)
+              onSubmitModal(order)
             }}>
             Submit
           </Button>
