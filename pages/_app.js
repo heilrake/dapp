@@ -1,4 +1,5 @@
-import '@styles/globals.css'
+import '@styles/globals.css';
+import { Toaster } from 'react-hot-toast';
 
 const Noop = ({ children }) => <>{children}</>
 
@@ -8,6 +9,7 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <Layout>
+      <Toaster />
       <Component {...pageProps} />
     </Layout>
   )

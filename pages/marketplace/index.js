@@ -7,6 +7,7 @@ import { OrderModal } from "@components/ui/order";
 import { useState } from "react";
 import { MarketHeader } from "@components/ui/marketplace";
 import { useWeb3 } from "@components/providers";
+import toast from "react-hot-toast";
 
 export default function Marketplace({ courses }) {
   const { web3, contract } = useWeb3();
@@ -35,11 +36,12 @@ export default function Marketplace({ courses }) {
         hexCourseId,
         proof
       ).send({ from: account.data, value })
+      toast.success('Successfully you buy course!')
       console.log(result)
     } catch {
-      console.error("Purchase course: Operation has failed.")
+      toast.error("Oppss try again.")
     }
-  }
+  };
 
   return (
     <>
