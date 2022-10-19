@@ -2,9 +2,13 @@ import { OwnedCourseCard, CourseFilter } from "@components/ui/course";
 import { Button } from "@components/ui/common";
 import { BaseLayout } from "@components/ui/layout";
 import { MarketHeader } from "@components/ui/marketplace";
+import { useAccount, useManagedCourses } from "@components/hooks/web3";
 
 export default function ManageCourses() {
+  const { account } = useAccount()
+  const { managedCourses } = useManagedCourses(account.data)
 
+  console.log(managedCourses.data)
   return (
     <>
       <MarketHeader />
@@ -26,6 +30,6 @@ export default function ManageCourses() {
       </section>
     </>
   )
-};
+}
 
 ManageCourses.Layout = BaseLayout;

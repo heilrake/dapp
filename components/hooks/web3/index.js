@@ -20,6 +20,14 @@ const enhanceHook = swrRes => {
   }
 };
 
+export const useManagedCourses = (...args) => {
+  const swrRes = enhanceHook(useHooks(hooks => hooks.useManagedCourses)(...args))
+
+  return {
+    managedCourses: swrRes
+  }
+}
+
 export const useNetwork = () => {
   const swrRes = enhanceHook(useHooks(hooks => hooks.useNetwork)());
   return {
