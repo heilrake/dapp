@@ -1,7 +1,7 @@
-const Item = ({ title, value }) => {
+const Item = ({ title, value, className }) => {
 
   return (
-    <div className="bg-gray-50 px-4 py-5  sm:px-6">
+    <div className={`${className} px-4 py-5  sm:px-6`}>
       <div className="text-sm font-medium text-gray-500">
         {title}
       </div>
@@ -10,7 +10,7 @@ const Item = ({ title, value }) => {
       </div>
     </div>
   )
-}
+};
 
 
 export default function ManagedCourseCard({ children, course }) {
@@ -18,14 +18,15 @@ export default function ManagedCourseCard({ children, course }) {
   return (
     <div className="bg-white border shadow overflow-hidden sm:rounded-lg mb-3">
       <div className="border-t border-gray-200">
-        <Item
-          title="Course ID"
-          value={course.ownedCourseId}
-        />
-        <Item
-          title="Proof"
-          value={course.proof}
-        />
+        {Object.keys(course).map((key, index) =>
+          <Item
+            key={key}
+            className={`${index % 2 ? "bg-gray-50" : "bg-white"}`}
+
+            title={key[0].toUpperCase() + key.slice(1)}
+            value={course[key]}
+          />
+        )}
         <div className="bg-white px-4 py-5 sm:px-6">
           {children}
         </div>
