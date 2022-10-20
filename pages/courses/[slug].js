@@ -11,20 +11,30 @@ import { BaseLayout } from "@components/ui/layout";
 import { getAllCourses } from "@content/courses/fetcher";
 
 export default function Course({ course }) {
-  const { account } = useAccount();
-  const { isLoading } = useWeb3();
-  const { ownedCourse } = useOwnedCourse(course, account.data);
-  const courseState = ownedCourse.data?.state;
+  const { isLoading } = useWeb3()
+  const { account } = useAccount()
+  const { ownedCourse } = useOwnedCourse(course, account.data)
+  const courseState = ownedCourse.data?.state
+  // const courseState = "deactivated"
 
-  const isLocked = !courseState || courseState === "purchased" ||
-    courseState === "deactivated";
+  const isLocked =
+    !courseState ||
+    courseState === "purchased" ||
+    courseState === "deactivated"
 
   return (
     <>
       <div className="py-4">
-        <CourseHero hasOwner={!!ownedCourse.data} title={course.title} description={course.description} image={course.coverImage} />
+        <CourseHero
+          hasOwner={!!ownedCourse.data}
+          title={course.title}
+          description={course.description}
+          image={course.coverImage}
+        />
       </div>
-      <Keypoints points={course.wsl} />
+      <Keypoints
+        points={course.wsl}
+      />
       {courseState &&
         <div className="max-w-5xl mx-auto">
           {courseState === "purchased" &&
@@ -73,7 +83,7 @@ export function getStaticPaths() {
 
 export function getStaticProps({ params }) {
   const { data } = getAllCourses()
-  const course = data.filter(c => c.slug === params.slug).at(0) // at(0)
+  const course = data.filter(c => c.slug === params.slug)[0]
 
   return {
     props: {
@@ -82,4 +92,4 @@ export function getStaticProps({ params }) {
   }
 }
 
-Course.Layout = BaseLayout
+Course.Layout = BaseLayout;
