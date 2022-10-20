@@ -1,5 +1,5 @@
 import { normalizeOwnedCourse } from 'untils/normalizeCourse';
-import useSWR from "swr"
+import useSWR from "swr";
 
 export const handler = (web3, contract) => account => {
 
@@ -7,18 +7,17 @@ export const handler = (web3, contract) => account => {
     (web3 && contract && account) ? `web3/managedCourses/${account}` : null,
     async () => {
       const courses = [];
-      const courseCount = await contract.methods.getCourseIndex().call();
+      const courseCount = await contract.methods.getCourseCount().call();
 
       for (let i = Number(courseCount) - 1; i >= 0; i--) {
         const courseHash = await contract.methods.getCourseHashAtIndex(i).call();
         const course = await contract.methods.getCourseByHash(courseHash).call();
 
         if (course) {
-          const normalized = normalizeOwnedCourse(web3)({ hash: courseHash }, course)
-          course.push(normalized)
+          const normalized = normalizeOwnedCourse(web3)({ hash: courseHash }, course);
+          courses.push(normalized);
         }
       }
-
       return courses;
     }
   )
