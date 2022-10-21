@@ -1,4 +1,4 @@
-import { useAccount, useManagedCourses } from "@components/hooks/web3";
+import { useAccount, useAdmin, useManagedCourses } from "@components/hooks/web3";
 import { useWeb3 } from "@components/providers";
 import { Button, Message } from "@components/ui/common";
 import { CourseFilter, ManagedCourseCard } from "@components/ui/course";
@@ -31,7 +31,7 @@ const VerificationInput = ({ onVerify }) => {
   )
 };
 export default function ManagedCourses() {
-  const { account } = useAccount();
+  const { account } = useAdmin({ redirectTo: "/marketplace" });
   const { managedCourses } = useManagedCourses(account);
   const { web3 } = useWeb3();
   const [proofedOwnership, setProofedOwnership] = useState({});
@@ -50,9 +50,13 @@ export default function ManagedCourses() {
       setProofedOwnership({
         [hash]: false
       })
-  };
+   };
 
-  return (
+  if (!account.isAdmin) {
+    return null
+  }
+
+    return (
     <>
       <MarketHeader />
       <CourseFilter />
