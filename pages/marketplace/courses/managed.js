@@ -32,7 +32,7 @@ const VerificationInput = ({ onVerify }) => {
 };
 export default function ManagedCourses() {
   const { account } = useAccount();
-  const { managedCourses } = useManagedCourses(account.data);
+  const { managedCourses } = useManagedCourses(account);
   const { web3 } = useWeb3();
   const [proofedOwnership, setProofedOwnership] = useState({});
 
