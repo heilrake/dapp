@@ -38,7 +38,6 @@ contract CourseMarketplace {
   /// Course is not created!
   error CourseIsNotCreated();
 
-
   /// Course has already a Owner!
   error CourseHasOwner();
   /// Only owner has an access!

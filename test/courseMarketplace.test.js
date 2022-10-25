@@ -1,8 +1,7 @@
 const CourseMarketplace = artifacts.require("CourseMarketplace");
+const { catchRevert } = require("./utils/exceptions/index");
 
 contract("CourseMarketplace", accounts => {
-
-
   const courseId = "0x00000000000000000000000000003130";
   const proof = "0x0000000000000000000000000000313000000000000000000000000000003130";
   const value = "900000000";
@@ -52,11 +51,13 @@ contract("CourseMarketplace", accounts => {
 
   })
   describe("Activate the purchased course", () => {
-    before(async () => {
-      await _contract.activateCourse(courseHash, { from: contractOwner })
+
+    it("should NOT be able to active course by NOT contract owner", async () => {
+      await catchRevert(_contract.activateCourse(courseHash, { from: buyer }))
     })
 
     it("should have 'activated' state", async () => {
+      await _contract.activateCourse(courseHash, { from: contractOwner })
       const course = await _contract.getCourseByHash(courseHash);
       const exptectedState = 1;
 
