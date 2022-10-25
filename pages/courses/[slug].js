@@ -16,7 +16,6 @@ export default function Course({ course }) {
   const { ownedCourse } = useOwnedCourse(course, account.data)
   const courseState = ownedCourse.data?.state
   // const courseState = "deactivated"
-
   const isLocked =
     !courseState ||
     courseState === "purchased" ||
