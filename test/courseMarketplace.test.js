@@ -2,6 +2,10 @@ const CourseMarketplace = artifacts.require("CourseMarketplace");
 const { catchRevert } = require("./utils/exceptions/index");
 
 contract("CourseMarketplace", accounts => {
+
+  const getBalance = async address => web3.eth.getBalance(address)
+  const toBN = value => web3.utils.toBN(value)
+
   const courseId = "0x00000000000000000000000000003130";
   const proof = "0x0000000000000000000000000000313000000000000000000000000000003130";
 
@@ -154,12 +158,25 @@ contract("CourseMarketplace", accounts => {
     })
 
     it("should be able repurchase with the original buyer", async () => {
-      await _contract.repurchaseCourse(courseHash2, { from: buyer, value })
+      const beforeTxBuyerBalance = await getBalance(buyer)
+      const result = await _contract.repurchaseCourse(courseHash2, { from: buyer, value })
+      const tx = await web3.eth.getTransaction(result.tx)
+      const afterTxBuyerBalance = await getBalance(buyer)
+
+      const gasUsed = toBN(result.receipt.gasUsed)
+      const gasPrice = toBN(tx.gasPrice)
+      const gas = gasUsed.mul(gasPrice)
+
       const course = await _contract.getCourseByHash(courseHash2)
       const exptectedState = 0
 
       assert.equal(course.state, exptectedState, "The course is not in purchased state")
       assert.equal(course.price, value, `The course price is not equal to ${value}`)
+      assert.equal(
+        toBN(beforeTxBuyerBalance).sub(toBN(value)).sub(gas).toString(),
+        afterTxBuyerBalance,
+        "Client balance is not correct!"
+      )
     })
 
     it("should NOT be able to repurchase purchased course", async () => {
