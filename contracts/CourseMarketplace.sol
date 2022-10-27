@@ -109,7 +109,10 @@ contract CourseMarketplace {
     course.state = State.Activated;
   }
 
-   function deactivateCourse(bytes32 courseHash) external onlyOwner {
+   function deactivateCourse(bytes32 courseHash)
+    external
+    onlyOwner
+  {
     if (!isCourseCreated(courseHash)) {
       revert CourseIsNotCreated();
     }
